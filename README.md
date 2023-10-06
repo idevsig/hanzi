@@ -10,4 +10,6 @@ yarn copy
 
 ## 依赖
 
--https://github.com/chanind/hanzi-writer
+- https://github.com/chanind/hanzi-writer
+
+## 问题

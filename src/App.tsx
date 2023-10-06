@@ -4,12 +4,15 @@ import "./App.css"
 import HanziWriter from "hanzi-writer"
 import { Canvg } from "canvg"
 
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
 const CopyRight = () => {
   return (
     <div className='copyright'>
-      <p className='p-1'>
+      <p>
         © 2023 | Powered by{" "}
-        <a className='a-1' href='https://i.jetsung.com' target='_black'>
+        <a href='https://i.jetsung.com' target='_black'>
           Jetsung
         </a>
       </p>
@@ -19,7 +22,7 @@ const CopyRight = () => {
 
 const App = () => {
   const [inputText, setInputText] = useState("")
-  const [animate, setAnimate] = useState(false)
+  const [animated, setAnimated] = useState(true)
   const characterTargetRef = useRef<HTMLDivElement | null>(null)
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +38,11 @@ const App = () => {
     if (!inputText) {
       return
     }
+
+    if (!animated) {
+      return
+    }
+
     // console.log(`current: ${mode}, ${inputText}`)
     const inputValue = inputText
     handleClearData()
@@ -43,11 +51,24 @@ const App = () => {
     if (/^[\u4e00-\u9fa5]$/.test(inputValue[0])) {
       const writer = HanziWriter.create("character-target-div", inputValue[0], {
         charDataLoader: function (char, onComplete) {
-          fetch("hanzi-writer-data/" + char + ".json").then(res => {
-            res.json().then(data => {
+          fetch("hanzi-writer-data/" + char + ".json")
+            .then(res => {
+              if (!res.ok) {
+                throw new Error("字库并无此字")
+              }
+              return res.json()
+            })
+            .then(data => {
               onComplete(data)
             })
-          })
+            .catch(error => {
+              // console.error("Fetch error:", error)
+              toast.error(error.message || "字库并无此字", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+              })
+              setAnimated(true)
+            })
         },
         width: 100,
         height: 100,
@@ -57,7 +78,6 @@ const App = () => {
       })
 
       // writer.showCharacter()
-      setAnimate(false)
 
       // 直接生成
       if (mode == "submit") {
@@ -67,9 +87,11 @@ const App = () => {
         })
       } else {
         // 生成动画
+        setAnimated(false)
         writer.animateCharacter().then(() => {
           generateDownloadSvg()
           setInputText(inputValue[0])
+          setAnimated(true)
         })
       }
     } else {
@@ -104,16 +126,17 @@ const App = () => {
 
     const divContainer = document.createElement("div")
     divContainer.classList.add("download")
+    const hanzi = inputText[0]
 
     const downloadSvgLink = document.createElement("a")
     downloadSvgLink.href = url
-    downloadSvgLink.download = `${inputText}.svg`
+    downloadSvgLink.download = `${hanzi}.svg`
     downloadSvgLink.textContent = "下载 SVG"
     divContainer.appendChild(downloadSvgLink)
 
     const downloadPngLink = document.createElement("a")
     downloadPngLink.href = convertSvgToPng(svgData)
-    downloadPngLink.download = `${inputText}.png`
+    downloadPngLink.download = `${hanzi}.png`
     downloadPngLink.textContent = "下载 PNG"
     divContainer.appendChild(downloadPngLink)
     // button
@@ -122,9 +145,7 @@ const App = () => {
     // newButton.addEventListener("click", () => convertSvgToPng(svgData))
     // divContainer.appendChild(newButton)
 
-    if (animate) {
-      characterTargetRef.current.appendChild(divContainer)
-    }
+    characterTargetRef.current.appendChild(divContainer)
   }
 
   const convertSvgToPng = (svgData: string) => {
@@ -141,20 +162,27 @@ const App = () => {
     event.preventDefault()
     handleClearData()
     setInputText("")
+    setAnimated(true)
   }
 
   const handleClearData = () => {
     if (characterTargetRef.current) {
       characterTargetRef.current.innerHTML = ""
+      characterTargetRef.current.focus()
     }
   }
 
   return (
     <>
-      <h1>汉字 SVG、PNG</h1>
       <div className='container'>
+        <h1>汉字 SVG、PNG</h1>
         <div className='input'>
           <input type='text' value={inputText} onChange={handleInputChange} />
+          {inputText && (
+            <span className='clear-button' onClick={handleClear}>
+              &#x2715;
+            </span>
+          )}
           <div className='button-container'>
             <button
               id='submit'
@@ -175,6 +203,7 @@ const App = () => {
           <div id='character-target-div' ref={characterTargetRef}></div>
         </div>
       </div>
+      <ToastContainer />
       <CopyRight />
     </>
   )
