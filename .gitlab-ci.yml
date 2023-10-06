@@ -4,12 +4,15 @@ cache:
   paths:
     - node_modules/
 
+install_dependencies:
+  stage: build
+  script:
+    - yarn
+    - yarn data
+
 deploy:
   stage: deploy
-  script: echo "Deploy to production"
-    - npm install -g yarn@1
-    - yarn install
-    - yarn data
+  script:
     - yarn build
     - mkdir .public
     - cp -r dist/* .public/
