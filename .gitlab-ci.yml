@@ -4,19 +4,13 @@ cache:
   paths:
     - node_modules/
 
-install_dependencies:
-  stage: build
+pages:
+  stage: deploy
   script:
     - yarn
     - yarn data
-
-deploy:
-  stage: deploy
-  script:
     - yarn build
-    - mkdir .public
-    - cp -r dist/* .public/
+    - cp -r dist/* public/
   artifacts:
     paths:
-      - .public
-  environment: production
+      - public
