@@ -1,0 +1,19 @@
+image: node:latest
+
+cache:
+  paths:
+    - node_modules/
+
+deploy:
+  stage: deploy
+  script: echo "Deploy to production"
+    - npm install -g yarn@1
+    - yarn install
+    - yarn data
+    - yarn build
+    - mkdir .public
+    - cp -r dist/* .public/
+  artifacts:
+    paths:
+      - .public
+  environment: production

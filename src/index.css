@@ -1,0 +1,140 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f5f5f5; /* 背景色 */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px; /* 固定宽度 */
+  background-color: #ffffff; /* 背景色 */
+  padding: 20px;
+  border-radius: 10px; /* 圆角边框 */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* 阴影效果 */
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* 输入框样式 */
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  width: 250px;
+  box-sizing: border-box; /* 使输入框大小不随内容改变 */
+}
+
+/* 提交按钮样式 */
+.button-container {
+  display: flex;
+  margin-top: 10px;
+  align-items: center; /* 垂直居中 */
+}
+
+button#submit,
+button#animate,
+button#clear {
+  padding: 10px 20px;
+  background-color: #007bff; /* 背景色 */
+  color: #fff; /* 文字颜色 */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* 按钮颜色变化动画 */
+  margin-right: 10px; /* 添加右侧间距 */
+}
+
+button#submit:hover,
+button#animate:hover,
+button#clear:hover {
+  background-color: #0056b3; /* 悬停时的背景色 */
+}
+/* 输出容器样式 */
+.output {
+  width: 300px; /* 固定宽度 */
+  height: 100px; /* 固定高度 */
+  overflow: hidden; /* 防止内容溢出 */
+  display: flex; /* 使用 flex 布局 */
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+}
+
+#character-target-div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 添加垂直间隔 */
+.input {
+  margin-bottom: 20px;
+}
+
+/* 外部容器样式 */
+.download {
+  display: flex; /* 使用flex布局 */
+  flex-direction: column; /* 垂直方向排列子元素 */
+  align-items: center; /* 水平居中对齐子元素 */
+}
+
+/* button 元素样式 */
+.download button {
+  padding: 8px 16px; /* 按钮内边距 */
+  background-color: #007bff; /* 按钮背景颜色 */
+  color: #fff; /* 按钮文字颜色 */
+  border: none; /* 去掉按钮边框 */
+  border-radius: 4px; /* 圆角 */
+  cursor: pointer; /* 鼠标样式为手型 */
+  margin-top: 10px; /* 按钮上外边距 */
+}
+
+/* button 元素悬停样式 */
+.download button:hover {
+  background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+
+/* a 标签样式 */
+.download a {
+  display: inline-block; /* 让 a 标签表现为块级元素，与 button 类似 */
+  margin-top: 5px; /* a 标签上外边距 */
+  padding: 6px 12px; /* a 标签内边距，与 button 类似 */
+  background-color: #007bff; /* a 标签背景颜色 */
+  color: #fff; /* a 标签文字颜色 */
+  border: none; /* 去掉边框，与 button 类似 */
+  border-radius: 4px; /* 圆角，与 button 类似 */
+  cursor: pointer; /* 鼠标样式为手型 */
+  text-decoration: none; /* 去掉下划线 */
+  font-size: 14px; /* 字体大小 */
+}
+
+/* a 标签悬停样式 */
+.download a:hover {
+  background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+
+/* CopyRight */
+.copyright a:hover,
+.copyright a:link,
+.copyright a:visited,
+.copyright a:active {
+  text-decoration: none;
+}
+
+.copyright a:hover {
+  color: #055905;
+}
