@@ -1,6 +1,8 @@
 import { useRef, useState, ChangeEvent } from "react"
 import "./App.css"
 
+import Option from "./option"
+
 import HanziWriter from "hanzi-writer"
 import { Canvg } from "canvg"
 
@@ -23,6 +25,10 @@ const CopyRight = () => {
 const App = () => {
   const [inputText, setInputText] = useState("")
   const [animated, setAnimated] = useState(true)
+
+  const [radicalColor, setRadicalColor] = useState("#ff0000")
+  const [fontSize, setFontSize] = useState(200)
+
   const characterTargetRef = useRef<HTMLDivElement | null>(null)
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,28 +76,31 @@ const App = () => {
               setAnimated(true)
             })
         },
-        width: 100,
-        height: 100,
+        width: fontSize,
+        height: fontSize,
         padding: 5,
         strokeAnimationSpeed: 1,
-        radicalColor: "#ff0000",
+        radicalColor: radicalColor,
       })
 
       // writer.showCharacter()
-
       // 直接生成
       if (mode == "submit") {
-        writer.showCharacter().then(() => {
-          generateDownloadSvg()
-          setInputText(inputValue[0])
+        writer.showCharacter({
+          onComplete: () => {
+            generateDownloadSvg()
+            setInputText(inputValue[0])
+          },
         })
       } else {
         // 生成动画
         setAnimated(false)
-        writer.animateCharacter().then(() => {
-          generateDownloadSvg()
-          setInputText(inputValue[0])
-          setAnimated(true)
+        writer.animateCharacter({
+          onComplete: () => {
+            generateDownloadSvg()
+            setInputText(inputValue[0])
+            setAnimated(true)
+          },
         })
       }
     } else {
@@ -177,7 +186,12 @@ const App = () => {
       <div className='container'>
         <h1>汉字 SVG、PNG</h1>
         <div className='input'>
-          <input type='text' value={inputText} onChange={handleInputChange} />
+          <input
+            type='text'
+            id='text'
+            value={inputText}
+            onChange={handleInputChange}
+          />
           {inputText && (
             <span className='clear-button' onClick={handleClear}>
               &#x2715;
@@ -194,13 +208,19 @@ const App = () => {
               onClick={event => handleGenerate(event, "animate")}>
               动画
             </button>
+            <Option
+              fontSize={fontSize}
+              radicalColor={radicalColor}
+              handleFontSizeChange={setFontSize}
+              handleRadicalColorChange={setRadicalColor}
+            />
             <button id='clear' onClick={handleClear}>
               清除
             </button>
           </div>
-        </div>
-        <div className='output'>
-          <div id='character-target-div' ref={characterTargetRef}></div>
+          <div className='output'>
+            <div id='character-target-div' ref={characterTargetRef}></div>
+          </div>
         </div>
       </div>
       <ToastContainer />

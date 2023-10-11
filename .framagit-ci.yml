@@ -8,7 +8,6 @@ pages:
   stage: deploy
   script:
     - yarn
-    - yarn data
     - yarn build
     - cp -r dist/* public/
   artifacts:

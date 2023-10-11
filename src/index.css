@@ -2,18 +2,17 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100vh;
   margin: 0;
-  background-color: #f5f5f5; /* 背景色 */
+  background-color: #f5f5f5;
 }
 
 .container {
-  margin-top: -150px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .input {
@@ -40,20 +39,25 @@ input[type="text"] {
   top: 5px;
   cursor: pointer;
   font-size: 16px;
-  color: #999; /* 按需更改颜色 */
-  display: none; /* 默认情况下隐藏 */
+  color: #999;
+  display: none;
 }
 
-/* 提交按钮样式 */
 .button-container {
   display: flex;
   margin-top: 10px;
-  align-items: center; /* 垂直居中 */
+  align-items: center;
 }
 
-button#submit,
-button#animate,
-button#clear {
+.option-container {
+  display: flex;
+
+  .item {
+    margin-left: 10px;
+  }
+}
+
+button {
   padding: 10px 20px;
   background-color: #007bff; /* 背景色 */
   color: #fff; /* 文字颜色 */
@@ -64,15 +68,20 @@ button#clear {
   margin-right: 10px; /* 添加右侧间距 */
 }
 
-button#submit:hover,
-button#animate:hover,
-button#clear:hover {
+.close-button {
+  margin: 10px;
+}
+
+button:hover,
+button:hover,
+button:hover {
   background-color: #0056b3; /* 悬停时的背景色 */
 }
+
 /* 输出容器样式 */
 .output {
-  width: 300px; /* 固定宽度 */
-  height: 100px; /* 固定高度 */
+  /* width: 300px; 
+  height: 100px;  */
   overflow: hidden; /* 防止内容溢出 */
   display: flex; /* 使用 flex 布局 */
   justify-content: center; /* 水平居中 */
@@ -135,10 +144,10 @@ button#clear:hover {
 }
 
 .copyright {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   margin-bottom: 10px;
   font-size: 14px;
   color: #999;
