@@ -1,11 +1,5 @@
 # 汉字 SVG、PNG
 
-- https://git.jetsung.com/idev/hanzi
-- https://framagit.org/idev/hanzi
-- https://github.com/idev-sig/hanzi
-
-DEMO：https://hanzi.idev.top
-
 ## 开发环境
 
 - **Node：** 18.18.0
@@ -27,3 +21,14 @@ yarn copy
 ## 依赖
 
 - https://github.com/chanind/hanzi-writer
+
+## 预览
+
+- https://hanzi.skiy.net
+
+## 仓库镜像
+
+- https://git.jetsung.com/idev/hanzi
+- https://framagit.org/idev/hanzi
+- https://gitcode.com/idev/hanzi
+- https://github.com/idevsig/hanzi
